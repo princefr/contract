@@ -159,3 +159,28 @@ mod MyToken {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use starknet::test_utils::*;
+
+    #[test]
+    fn test_erc20() {
+        let mut
+        contract = MyToken::deploy(
+            ContractAddress::from([0; 32]),
+            ContractAddress::from([1; 32]),
+            ContractAddress::from([2; 32]),
+            ContractAddress::from([3; 32]),
+        );
+
+        let alice = ContractAddress::from([4; 32]);
+        let bob = ContractAddress::from([5; 32]);
+
+        assert_eq!(contract.total_supply(), 10000000000000000000000);
+        assert_eq!(contract.balance_of(alice), 10000000000000000000000);
+        assert_eq!(contract.balance_of(bob), 0);
+
+    }
+}
